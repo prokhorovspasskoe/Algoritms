@@ -3,15 +3,15 @@ package ru.prokhorov;
 import java.math.BigDecimal;
 
 public class Notebook {
-    private BigDecimal price;
+    private int price;
     private int ram;
     private String manufacturer;
 
-    public BigDecimal getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
