@@ -10,7 +10,7 @@ public class Main {
         SelectionSort selectionSort = new SelectionSort();
         arrNotebook = selectionSort.sort(arrNotebook);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < COUNT; i++) {
             System.out.println(arrNotebook[i].getManufacturer());
             System.out.println(arrNotebook[i].getPrice());
             System.out.println(arrNotebook[i].getRam());
