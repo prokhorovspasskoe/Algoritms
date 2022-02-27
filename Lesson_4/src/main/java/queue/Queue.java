@@ -14,5 +14,4 @@ public interface Queue<E> {
     boolean isFull();
 
     void display();
-
 }
