@@ -3,10 +3,13 @@ package linkedlist;
 public class SimpleLinkedList<E> implements LinkedList<E>{
     protected int size;
     protected Node<E> first;
+    protected Node<E> current;
+    protected Node<E>[] arrayPrev;
 
     @Override
     public void insertFirst(E value) {
-        first = new Node<>(value, first);
+        first = new Node<>(value, first, null);
+        arrayPrev[0] = first;
         size++;
     }
 
@@ -19,6 +22,7 @@ public class SimpleLinkedList<E> implements LinkedList<E>{
         first = removedNode.next;
         removedNode.next = null;
         size--;
+        arrayPrev[0] = null;
         return removedNode.item;
     }
 
@@ -101,6 +105,14 @@ public class SimpleLinkedList<E> implements LinkedList<E>{
 
     @Override
     public E getFirst() {
-        return null;
+        return first.item;
+    }
+
+    public void insert(E value){
+        if(size == 1){
+            current = new Node<>(value, null, first);
+        }else if(size > 1){
+            current = new Node<>(value, null, arrayPrev[size - 1]);
+        }
     }
 }
