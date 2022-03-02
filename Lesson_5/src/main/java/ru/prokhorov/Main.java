@@ -1,2 +1,7 @@
-package ru.prokhorov;public class Main {
+package ru.prokhorov;
+
+public class Main {
+    public static void main(String[] args) {
+        
+    }
 }
