@@ -250,4 +250,9 @@ public class TreeImpl <E extends Comparable<? super E>> implements Tree<E>{
         postOrder(current.getRightChild());
         System.out.print(current.getValue() + " ");
     }
+
+    @Override
+    public Node<E> getRoot() {
+        return root;
+    }
 }

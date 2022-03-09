@@ -1,6 +1,6 @@
 package ru.prokhorov;
 
-public interface Tree<E> {
+public interface Tree<E extends Comparable<? super E>> {
     enum TraversMode {
         IN_ORDER, PRE_ORDER, POST_ORDER
     }
@@ -18,4 +18,6 @@ public interface Tree<E> {
     void display();
 
     void traverse(TraversMode mode);
+
+    Node<E> getRoot();
 }
