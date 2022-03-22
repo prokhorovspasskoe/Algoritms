@@ -4,11 +4,11 @@ import java.util.*;
 
 public class GraphImpl implements Graph{
     private final List<Vertex> vertexList;
-    private final boolean[][] adjMatrix;
+    private final int[][] adjMatrix;
 
     public GraphImpl(int maxVertexCount) {
         this.vertexList = new ArrayList<>(maxVertexCount);
-        this.adjMatrix = new boolean[maxVertexCount][maxVertexCount];
+        this.adjMatrix = new int[maxVertexCount][maxVertexCount];
     }
 
     @Override
@@ -17,7 +17,7 @@ public class GraphImpl implements Graph{
     }
 
     @Override
-    public boolean addEdge(String startLabel, String secondLabel) {
+    public boolean addEdge(String startLabel, String secondLabel, int weight) {
         int startIndex = indexOf(startLabel);
         int endIndex = indexOf(secondLabel);
 
@@ -25,8 +25,8 @@ public class GraphImpl implements Graph{
             return false;
         }
 
-        adjMatrix[startIndex][endIndex] = true; ////////////!!!!
-//        adjMatrix[endIndex][startIndex] = true; ////////////!!!!
+        adjMatrix[startIndex][endIndex] = weight;
+        adjMatrix[endIndex][startIndex] = weight;
 
         return true;
     }
@@ -68,7 +68,7 @@ public class GraphImpl implements Graph{
         for (int i = 0; i < getSize(); i++) {
             sb.append(vertexList.get(i));
             for (int j = 0; j < getSize(); j++) {
-                if (adjMatrix[i][j]) {
+                if (adjMatrix[i][j] > 0) {
                     sb.append(" -> ").append(vertexList.get(j));
                 }
             }
@@ -103,7 +103,7 @@ public class GraphImpl implements Graph{
         int currentIndex = vertexList.indexOf(vertex);
 
         for (int i = 0; i < getSize(); i++) {
-            if (adjMatrix[currentIndex][i] && !vertexList.get(i).isVisited()) {
+            if (adjMatrix[currentIndex][i] > 0 && !vertexList.get(i).isVisited()) {
                 return vertexList.get(i);
             }
         }
