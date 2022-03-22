@@ -12,6 +12,12 @@ public interface Graph {
 
     void dfs(String startLabel);
 
+    void dfsEdge(String startLabel);
+
     void bfs(String startLabel);
+
+    public Edge[] getArrEdge();
+
+    public int[] getBufResult();
 
 }

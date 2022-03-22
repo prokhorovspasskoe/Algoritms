@@ -5,10 +5,15 @@ import java.util.*;
 public class GraphImpl implements Graph{
     private final List<Vertex> vertexList;
     private final int[][] adjMatrix;
+    private final Edge[] arrEdge;
+    private int[] bufResult;
+    private int count;
+    private int sum;
 
     public GraphImpl(int maxVertexCount) {
         this.vertexList = new ArrayList<>(maxVertexCount);
         this.adjMatrix = new int[maxVertexCount][maxVertexCount];
+        arrEdge = new Edge[maxVertexCount];
     }
 
     @Override
@@ -25,15 +30,33 @@ public class GraphImpl implements Graph{
             return false;
         }
 
+        Edge edge = new Edge(startLabel, secondLabel, weight);
+        arrEdge[count] = edge;
+        count++;
+
         adjMatrix[startIndex][endIndex] = weight;
         adjMatrix[endIndex][startIndex] = weight;
 
         return true;
     }
 
+    @Override
+    public Edge[] getArrEdge() {
+        return arrEdge;
+    }
+
     private int indexOf(String label) {
         for (int i = 0; i < vertexList.size(); i++) {
             if (vertexList.get(i).getLabel().equals(label)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int indexOfArrEdge(String label){
+        for (int i = 0; i < arrEdge.length; i++) {
+            if(arrEdge[i].getStartPoint().equals(label)){
                 return i;
             }
         }
@@ -97,6 +120,51 @@ public class GraphImpl implements Graph{
                 stack.pop();
             }
         }
+    }
+
+    @Override
+    public void dfsEdge(String startLabel) {
+        //???
+        int startIndex = indexOfArrEdge(startLabel);
+        count = 0;
+
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("Неверный путь! " + startLabel);
+        }
+        Stack<Edge> stack = new Stack<>();
+        Edge edge = arrEdge[startIndex];
+        visitEdge(stack, edge);
+
+        while (!stack.isEmpty()){
+            edge = getNearUnvisitedEdge(stack.peek());
+            if(edge != null){
+                sum += edge.getWeight();
+                visitEdge(stack, edge);
+            }else {
+                bufResult[count] = sum;
+                count++;
+                stack.pop();
+            }
+        }
+    }
+
+    @Override
+    public int[] getBufResult() {
+        return bufResult;
+    }
+
+    private Edge getNearUnvisitedEdge(Edge edge) {
+        for (int i = 0; i < arrEdge.length; i++) {
+            if(!arrEdge[i].isVisited()){
+                return arrEdge[i];
+            }
+        }
+        return null;
+    }
+
+    private void visitEdge(Stack<Edge> stack, Edge edge) {
+        stack.push(edge);
+        edge.setVisited(true);
     }
 
     private Vertex getNearUnvisitedVertex(Vertex vertex) {
