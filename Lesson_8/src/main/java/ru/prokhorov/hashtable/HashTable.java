@@ -1,6 +1,6 @@
 package ru.prokhorov.hashtable;
 
-public interface HashTable<V, K> {
+public interface HashTable<K, V> {
     boolean put(K key, V value);
 
     V get(K key);
